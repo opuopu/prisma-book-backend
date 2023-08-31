@@ -1,20 +1,18 @@
-import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
+/* eslint-disable @typescript-eslint/ban-types */
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken'
 
 const createToken = (
-  payload: Record<string, unknown>,
+  payload: object,
   secret: Secret,
-  expireTime: string
+  options: object
 ): string => {
-  return jwt.sign(payload, secret, {
-    expiresIn: expireTime,
-  });
-};
+  return jwt.sign(payload, secret, options)
+}
 
 const verifyToken = (token: string, secret: Secret): JwtPayload => {
-  return jwt.verify(token, secret) as JwtPayload;
-};
-
-export const jwtHelpers = {
+  return jwt.verify(token, secret) as JwtPayload
+}
+export const jwthelper = {
   createToken,
   verifyToken,
-};
+}
