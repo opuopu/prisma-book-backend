@@ -5,11 +5,15 @@ import { Secret } from "jsonwebtoken"
 import config from "../../../config"
 import ApiError from "../../../errors/ApiError"
 
+import bcrypt from 'bcrypt'
 import { jwthelper } from "../../../helpers/jwtHelpers"
 import prisma from "../../../shared/prisma"
 
-
 const createAuthUser = async (data: User): Promise<User> => {
+  if(data?.password){
+  const hashedPassword =await bcrypt.hash(data?.password,Number(config.bycrypt_salt_rounds))
+              data.password = hashedPassword;
+  }
     const result = await prisma.user.create({
         data,
         include:{
@@ -36,7 +40,10 @@ const createAuthUser = async (data: User): Promise<User> => {
         throw new ApiError(httpStatus.BAD_REQUEST,"user not exist")
 
     }
-        if(isUserExist?.password !==password){
+
+    const decriptedPassword  = await bcrypt.compare(password,isUserExist.password)
+
+        if(isUserExist?.password && !decriptedPassword){
             throw new ApiError(httpStatus.BAD_REQUEST,"password is incorrect")
         }
         const accessToken = jwthelper.createToken(
