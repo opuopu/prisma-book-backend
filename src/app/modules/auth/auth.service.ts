@@ -38,7 +38,7 @@ const createAuthUser = async (data:any) => {
 
     if (isUserExist) {
       accessToken = jwthelper.createToken(
-        { id: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
+        { userId: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
         config.jwt.secret as Secret,
         {
           expiresIn: process.env.JWT_EXPIRES_IN,
@@ -46,7 +46,7 @@ const createAuthUser = async (data:any) => {
       );
 
       refreshToken = jwthelper.createToken(
-        { id: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
+        { userId: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
         config.jwt.secret as Secret,
         {
           expiresIn: config.jwt.refresh_expires_in,
@@ -78,7 +78,7 @@ const createAuthUser = async (data:any) => {
             throw new ApiError(httpStatus.BAD_REQUEST,"password is incorrect")
         }
         const accessToken = jwthelper.createToken(
-          {id:isUserExist?.id,email:isUserExist?.email,role:isUserExist?.role},
+          {userId:isUserExist?.id,email:isUserExist?.email,role:isUserExist?.role},
           config.jwt.secret as Secret,
           {
             expiresIn: process.env.JWT_EXPIRES_IN,
@@ -86,7 +86,7 @@ const createAuthUser = async (data:any) => {
         )
       
         const refreshToken = jwthelper.createToken(
-          {id:isUserExist?.id,email:isUserExist?.email,role:isUserExist?.role},
+          {userId:isUserExist?.id,email:isUserExist?.email,role:isUserExist?.role},
           config.jwt.secret as Secret,
           {
             expiresIn: config.jwt.refresh_expires_in,
