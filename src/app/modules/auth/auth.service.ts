@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { User } from "@prisma/client"
 import httpStatus from "http-status"
 import { Secret } from "jsonwebtoken"
 import config from "../../../config"
@@ -9,23 +8,55 @@ import bcrypt from 'bcrypt'
 import { jwthelper } from "../../../helpers/jwtHelpers"
 import prisma from "../../../shared/prisma"
 
-const createAuthUser = async (data: User): Promise<User> => {
-  if(data?.password){
-  const hashedPassword =await bcrypt.hash(data?.password,Number(config.bycrypt_salt_rounds))
-              data.password = hashedPassword;
+const createAuthUser = async (data:any) => {
+  if (data?.password) {
+    const hashedPassword = await bcrypt.hash(data?.password, Number(config.bycrypt_salt_rounds));
+    data.password = hashedPassword;
   }
-    const result = await prisma.user.create({
-        data,
-        include:{
-            orders:true,
-            reviews:true
+
+  const result = await prisma.user.create({
+    data,
+    include: {
+      orders: true,
+      reviews: true,
+    },
+  });
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'something went wrong');
+  }
+
+  let accessToken;
+  let refreshToken;
+
+  if (result) {
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        email: data?.email,
+      },
+    });
+
+    if (isUserExist) {
+      accessToken = jwthelper.createToken(
+        { id: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
+        config.jwt.secret as Secret,
+        {
+          expiresIn: process.env.JWT_EXPIRES_IN,
         }
-    })
-    if (!result) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'something went wrong')
+      );
+
+      refreshToken = jwthelper.createToken(
+        { id: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
+        config.jwt.secret as Secret,
+        {
+          expiresIn: config.jwt.refresh_expires_in,
+        }
+      );
     }
-    return result
   }
+
+  return { data: result, accessToken, refreshToken };
+};
 
 
 

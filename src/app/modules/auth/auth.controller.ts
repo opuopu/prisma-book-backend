@@ -5,10 +5,11 @@ import authservices from "./auth.service"
 const createauthUser = catchAsync(async (req: Request, res: Response) => {
     const result = await authservices.createAuthUser(req.body)
     res.send({
+      refreshToken:result.refreshToken,
       success: true,
       statusCode: 200,
       message: 'Users created successfully',
-      data: result,
+      data: result.data,
     })
   })
   const loginUser = catchAsync(async (req: Request, res: Response) => {
