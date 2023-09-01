@@ -9,6 +9,6 @@ router.get('/',booksController.getallbooks)
 router.get('/:categoryId/category',booksController.getBooksByCategoryId)
 router.get('/:id',booksController.getsingleBook)
 router.patch('/:id',auth(ENUM_USER_ROLE.ADMIN),booksController.updateBook)
-router.delete('/:id',auth(ENUM_USER_ROLE.ADMIN),booksController.getBooksByCategoryId)
+router.delete('/:id',auth(ENUM_USER_ROLE.ADMIN),booksController.deleteBook)
 const booksRoutes  =  router
 export default booksRoutes
