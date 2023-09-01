@@ -3,13 +3,14 @@ import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiError";
 import prisma from "../../../shared/prisma";
 
-
+// create
 const createCategory = async(data:Category):Promise<Category>=>{
     const result = await prisma.category.create({
         data
     })
     return result
 }
+// update
 const updateCategory = async (
     id: string,
     data: Partial<Category>
@@ -25,6 +26,7 @@ const updateCategory = async (
     })
     return result
   }
+  // get all
   const getallcateGories = async (): Promise<Category[] | null> => {
     const result = await prisma.category.findMany({
         include:{
@@ -50,6 +52,7 @@ const updateCategory = async (
     return result
   }
 
+  // delete
   const deleteCategory = async (id: string): Promise<Category | null> => {
     const result = await prisma.category.delete({
         where:{

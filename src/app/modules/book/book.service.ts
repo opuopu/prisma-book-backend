@@ -121,9 +121,59 @@ if(category !==undefined){
         };
     }
 
+
+    // get single book 
+    const getsingleBook = async (id: string): Promise<Book | null> => {
+        const result = await prisma.book.findUnique({
+            where:{
+                id
+            },
+            include:{
+                category:true
+            }
+        })
+        return result
+      }
+
+
+
+
+    //   update single books 
+    const updateBook = async (
+        id: string,
+        data: Partial<Book>
+      ): Promise<Book | null> => {
+        const result = await prisma.book.update({
+               where:{
+                id
+               },
+               include:{
+              category:true
+               },
+               data
+        })
+        return result
+      }
+
+        // delete
+  const deleteBook = async (id: string): Promise<Book | null> => {
+    const result = await prisma.book.delete({
+        where:{
+            id
+        },
+        include:{
+            category:true
+        }
+    })
+    return result
+  }
 const booksServices ={
     createBooks,
     getallbooks,
-    getBooksByCategoryId
+    getBooksByCategoryId,
+    getsingleBook,
+    updateBook,
+    deleteBook
+
 }
 export default booksServices

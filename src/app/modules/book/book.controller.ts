@@ -42,9 +42,51 @@ const getallbooks = catchAsync(async (req: Request, res: Response) => {
        data:result
     })
     })
+
+
+
+    // single 
+    const getsingleBook = catchAsync(async (req: Request, res: Response) => {
+      const result = await booksServices.getsingleBook(req.params.id)
+      res.send({
+        success: true,
+        statusCode: 200,
+        message: 'book retrieved  successfully',
+        data: result,
+      })
+    })
+
+
+
+
+// update
+
+    const updateBook = catchAsync(async (req: Request, res: Response) => {
+      const result = await booksServices.updateBook(req.params.id, req.body)
+      res.send({
+        success: true,
+        statusCode: 200,
+        message: 'book updated   successfully',
+        data: result,
+      })
+    })
+
+    // delete
+    const deleteBook = catchAsync(async (req: Request, res: Response) => {
+      const result = await booksServices.deleteBook(req.params.id)
+      res.send({
+        success: true,
+        statusCode: 200,
+        message: 'book deleted   successfully',
+        data: result,
+      })
+    })
     const booksController  ={
    getallbooks,
    createBooks,
-   getBooksByCategoryId
+   getBooksByCategoryId,
+   getsingleBook,
+   updateBook,
+   deleteBook
     }
     export default booksController

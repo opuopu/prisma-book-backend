@@ -7,5 +7,8 @@ const router  = express.Router()
 router.post('/create-book',auth(ENUM_USER_ROLE.ADMIN),booksController.createBooks)
 router.get('/',booksController.getallbooks)
 router.get('/:categoryId/category',booksController.getBooksByCategoryId)
+router.get('/:id',booksController.getsingleBook)
+router.patch('/:id',auth(ENUM_USER_ROLE.ADMIN),booksController.updateBook)
+router.delete('/:id',auth(ENUM_USER_ROLE.ADMIN),booksController.getBooksByCategoryId)
 const booksRoutes  =  router
 export default booksRoutes
