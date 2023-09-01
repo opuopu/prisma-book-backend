@@ -9,7 +9,7 @@ const router  =  express.Router()
  router.get('/',auth(ENUM_USER_ROLE.ADMIN),validateRequest(userzodvalidation.createUserSchema), usercontroller.getalluser)
  router.get('/:id',auth(ENUM_USER_ROLE.ADMIN), usercontroller.getsingleuser)
  router.patch('/:id',auth(ENUM_USER_ROLE.ADMIN), validateRequest(userzodvalidation.updateUserSchema),usercontroller.updateuser)
-
+router.delete('/:id',auth(ENUM_USER_ROLE.ADMIN),usercontroller.deleteuser)
 
 const userRoutes =  router
 export default userRoutes

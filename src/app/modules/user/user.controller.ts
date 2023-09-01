@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import catchAsync from "../../../shared/catchAsync"
-import userservice from "./user.service"
+import { default as userService, default as userservice } from "./user.service"
 const getalluser = catchAsync(async (req: Request, res: Response) => {
 
   const result = await userservice.getallUser()
@@ -33,9 +33,20 @@ const updateuser = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+const deleteuser = catchAsync(async (req: Request, res: Response) => {
+  const result = await userService.deleteUser(req.params.id)
+  res.send({
+    success: true,
+    statusCode: 200,
+    message: 'User deleted   successfully',
+    data: result,
+  })
+})
   const usercontroller ={
   getalluser,
   getsingleuser,
-  updateuser
+  updateuser,
+  deleteuser
   }
   export default usercontroller

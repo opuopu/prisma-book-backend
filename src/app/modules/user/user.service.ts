@@ -4,7 +4,12 @@ import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
 // get all user
 const getallUser = async (): Promise<User[] | null> => {
-    const result = await prisma.user.findMany({})
+    const result = await prisma.user.findMany({
+        include:{
+            orders:true,
+            reviews:true
+        }
+    })
     if (!result) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'something went wrong')
     }
@@ -16,6 +21,10 @@ const getSingleUser = async (id: string): Promise<User | null> => {
     const result = await prisma.user.findUnique({
         where:{
             id
+        },
+        include:{
+            orders:true,
+            reviews:true
         }
      })
     return result
@@ -30,15 +39,33 @@ const updateUser = async (
            where:{
             id
            },
+           include:{
+            orders:true,
+            reviews:true
+           },
            data
     })
     return result
   }
   
+//   delete 
+const deleteUser = async (id: string): Promise<User | null> => {
+    const result = await prisma.user.delete({
+        where:{
+            id
+        },
+        include:{
+            orders:true,
+            reviews:true
+        }
+    })
+    return result
+  }
 
 const userservice ={
       getallUser,
       getSingleUser,
-      updateUser
+      updateUser,
+      deleteUser 
 }
 export default userservice
