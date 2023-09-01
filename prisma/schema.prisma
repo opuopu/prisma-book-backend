@@ -30,7 +30,7 @@ model Book {
   author          String
   price           Float
   genre           String
-  publicationDate DateTime
+  publicationDate String 
   categoryId      String    // You can change the data type to UUID if preferred
   category        Category  @relation(fields: [categoryId], references: [id])
    orderedBooks  OrderedBook[]
