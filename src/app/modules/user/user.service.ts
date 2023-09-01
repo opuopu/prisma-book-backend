@@ -50,6 +50,33 @@ const updateUser = async (
   
 //   delete 
 const deleteUser = async (id: string): Promise<User | null> => {
+
+  await prisma.$transaction(async(tx)=>{
+    const findOrder  =  await tx.order.findMany({
+      where:{
+        userId:id
+      }
+    })
+ 
+
+
+await Promise.all(
+  findOrder.map(async(order)=>{
+    await tx.orderedBook.deleteMany({
+          where:{
+               orderId:order?.id
+          }
+        })
+  })
+ 
+)
+await tx.order.deleteMany({
+  where:{
+    userId:id
+  }
+})
+    
+  })
     const result = await prisma.user.delete({
         where:{
             id
