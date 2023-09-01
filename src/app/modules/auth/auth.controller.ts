@@ -47,7 +47,7 @@ const createauthUser = catchAsync(async (req: Request, res: Response) => {
     createauthUser,
     loginUser,
     refreshToken
-    // refreshToken,
+   
   }
   export default authcontroller
   

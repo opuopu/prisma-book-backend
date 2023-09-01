@@ -60,9 +60,49 @@ const createAuthUser = async (data: User): Promise<User> => {
         }
   }
 
+  const refreshToken = async (token: string) => {
+    let verifyToken = null
+    try {
+      verifyToken = jwthelper.verifyToken(
+        token,
+        config.jwt.refresh_secret as Secret
+      )
+    } catch (error) {
+      throw new ApiError(404, 'invalid token')
+    }
+    // step 2 cheek if user exists or not
+
+    const isUserExist =  await prisma.user.findUnique({
+      where:{
+          email:verifyToken?.email
+      }
+  })
+  if(!isUserExist){
+      throw new ApiError(httpStatus.BAD_REQUEST,"user not exist")
+
+  }
+   
+    // const { email } = isUserExist
+ 
+  
+
+    // step 3 generate new token
+    const accessToken = jwthelper.createToken(
+      {id:isUserExist?.id,email:isUserExist?.email,role:isUserExist?.role},
+      config.jwt.secret as Secret,
+      {
+        expiresIn: config.jwt.expires_in,
+      }
+    )
+    return {
+      accessToken,
+    }
+  }
+
   const authservices = {
     createAuthUser,
-    loginuser
+    loginuser,
+    refreshToken
     
   }
   export default authservices
