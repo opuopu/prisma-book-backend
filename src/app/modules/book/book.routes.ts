@@ -6,5 +6,6 @@ import booksController from './book.controller'
 const router  = express.Router()
 router.post('/create-book',auth(ENUM_USER_ROLE.ADMIN),booksController.createBooks)
 router.get('/',booksController.getallbooks)
+router.get('/category/:categoryId',booksController.getBooksByCategoryId)
 const booksRoutes  =  router
 export default booksRoutes

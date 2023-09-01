@@ -18,6 +18,21 @@ const getallbooks = catchAsync(async (req: Request, res: Response) => {
       data: result.data
   });
   })
+
+
+  // get books by category id 
+  const getBooksByCategoryId = catchAsync(async (req: Request, res: Response) => {
+
+      const options = pick(req.query, ['limit', 'page', "skip", 'sortBy', 'sortOrder']);
+      const result = await booksServices.getBooksByCategoryId(req.params.categoryId,options)
+      sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'books fetched successfully',
+        meta: result.meta,
+        data: result.data
+    });
+    })
   const createBooks =  catchAsync(async(req:Request,res:Response)=>{
     const result  = await booksServices.createBooks(req.body)
     res.send({
@@ -29,6 +44,7 @@ const getallbooks = catchAsync(async (req: Request, res: Response) => {
     })
     const booksController  ={
    getallbooks,
-   createBooks
+   createBooks,
+   getBooksByCategoryId
     }
     export default booksController
