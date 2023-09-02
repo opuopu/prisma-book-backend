@@ -11,7 +11,8 @@ import prisma from "../../../shared/prisma"
 import { user } from "./auth.interface"
 
 const createAuthUser = async (data:User):Promise<User|null> => {
- 
+ const password = await bcrypt.hash(data?.password,Number(config.bycrypt_salt_rounds))
+data.password = password
   const result = await prisma.user.create({
     data,
     include: {

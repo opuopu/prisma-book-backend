@@ -10,6 +10,8 @@ const getallbooks = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, booksfilterableOptions);
     const options = pick(req.query, ['limit', 'page', "skip", 'sortBy', 'sortOrder']);
     const result = await booksServices.getallbooks(filters,options)
+  
+  
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

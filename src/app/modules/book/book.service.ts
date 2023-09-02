@@ -19,7 +19,7 @@ const createBooks = async(data:Book):Promise<Book>=>{
 }
 const getallbooks = async (filters:any,options:IPaginationOptions): Promise<IGenericResponse<Book[] | null>> => {
     const {search,minPrice,maxPrice,category} =  filters
-    
+   
     const {limit,skip,page} =  paginationHelpers.calculatePagination(options)
 
     const andConditions =[]
@@ -35,19 +35,34 @@ const getallbooks = async (filters:any,options:IPaginationOptions): Promise<IGen
         })
     }
 
-    if (minPrice !== undefined || maxPrice !== undefined) {
-        const maxPrices = parseFloat(maxPrice);
-        const minPrices = parseFloat(minPrice);
-      
-        if (!isNaN(maxPrices) && !isNaN(minPrices)) {
+    if (minPrice !== undefined) {
+    
+      const minPrices = parseFloat(minPrice);
+  
+      if (!isNaN(minPrices)) {
           andConditions.push({
-            price: {
-              gte: minPrices,
-              lte: maxPrices,
-            },
+              price: {
+                  gte: minPrices,
+              },
           });
-        }
+          console.log("MinPrice is used");
       }
+  }
+  
+  if (maxPrice !== undefined) {
+   
+      const maxPrices = parseFloat(maxPrice);
+  
+      if (!isNaN(maxPrices)) {
+          andConditions.push({
+              price: {
+                  lte: maxPrices,
+              },
+          });
+          console.log("MaxPrice is used");
+      }
+  }
+  
       
 if(category !==undefined){
     andConditions.push({
