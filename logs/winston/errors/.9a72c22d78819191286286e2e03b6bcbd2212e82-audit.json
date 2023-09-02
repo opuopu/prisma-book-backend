@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\web-2\\assignment\\prisma-backend-books-assignment-8\\logs\\winston\\errors\\.9a72c22d78819191286286e2e03b6bcbd2212e82-audit.json",
+    "files": [
+        {
+            "date": 1693647742040,
+            "name": "D:\\web-2\\assignment\\prisma-backend-books-assignment-8\\logs\\winston\\errors\\phu-2023-02-09-15-error.log",
+            "hash": "d4c0f0959ad807ab884cfd05a3949f918e1e781d0d92506aa7002a275e2c6d8b"
+        }
+    ],
+    "hashType": "sha256"
+}
