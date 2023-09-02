@@ -4,12 +4,13 @@ import catchAsync from "../../../shared/catchAsync"
 import authservices from "./auth.service"
 const createauthUser = catchAsync(async (req: Request, res: Response) => {
     const result = await authservices.createAuthUser(req.body)
+ 
     res.send({
-      refreshToken:result.refreshToken,
+
       success: true,
       statusCode: 200,
       message: 'Users created successfully',
-      data: result.data,
+      data: result,
     })
   })
   const loginUser = catchAsync(async (req: Request, res: Response) => {
@@ -44,10 +45,22 @@ const createauthUser = catchAsync(async (req: Request, res: Response) => {
       data: result,
     })
   })
+
+  // profile
+  const getUserProfile = catchAsync(async(req:Request,res:Response)=>{
+    const result  = await authservices.getUserProfile(req.user)
+    res.send({
+      statusCode: 200,
+      success: true,
+      message: 'User profile information retrive  Successfully',
+      data: result,
+    })
+  })
   const authcontroller = {
     createauthUser,
     loginUser,
-    refreshToken
+    refreshToken,
+    getUserProfile
    
   }
   export default authcontroller

@@ -4,58 +4,30 @@ import { Secret } from "jsonwebtoken"
 import config from "../../../config"
 import ApiError from "../../../errors/ApiError"
 
+import { User } from "@prisma/client"
 import bcrypt from 'bcrypt'
 import { jwthelper } from "../../../helpers/jwtHelpers"
 import prisma from "../../../shared/prisma"
+import { user } from "./auth.interface"
 
-const createAuthUser = async (data:any) => {
-  if (data?.password) {
-    const hashedPassword = await bcrypt.hash(data?.password, Number(config.bycrypt_salt_rounds));
-    data.password = hashedPassword;
-  }
-
+const createAuthUser = async (data:User):Promise<User|null> => {
+ 
   const result = await prisma.user.create({
     data,
     include: {
       orders: true,
       reviews: true,
     },
+    
   });
 
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'something went wrong');
   }
+ 
+  
 
-  let accessToken;
-  let refreshToken;
-
-  if (result) {
-    const isUserExist = await prisma.user.findUnique({
-      where: {
-        email: data?.email,
-      },
-    });
-
-    if (isUserExist) {
-      accessToken = jwthelper.createToken(
-        { userId: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
-        config.jwt.secret as Secret,
-        {
-          expiresIn: process.env.JWT_EXPIRES_IN,
-        }
-      );
-
-      refreshToken = jwthelper.createToken(
-        { userId: isUserExist.id, email: isUserExist.email, role: isUserExist.role },
-        config.jwt.secret as Secret,
-        {
-          expiresIn: config.jwt.refresh_expires_in,
-        }
-      );
-    }
-  }
-
-  return { data: result, accessToken, refreshToken };
+  return result
 };
 
 
@@ -137,10 +109,39 @@ const createAuthUser = async (data:any) => {
     }
   }
 
+  // profile
+
+  const getUserProfile  = async (token:any):Promise<user|null>=>{
+    const {role,userId} =  token
+    const result  = await  prisma.user.findUnique({
+      where:{
+          id:userId,
+          role
+      },
+  
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true
+    }
+   
+    })
+    if(!result){
+      throw new ApiError(httpStatus.NOT_FOUND,"user not found")
+    }
+    return result
+   
+  }
+
   const authservices = {
     createAuthUser,
     loginuser,
-    refreshToken
+    refreshToken,
+    getUserProfile
     
   }
   export default authservices

@@ -1,22 +1,8 @@
-// import express from 'express';
 
-// const router = express.Router();
-
-// const moduleRoutes = [
-//   // ... routes
-
-
-//   {
-//     path: '/offered-course-class-schedules',
-//     route: ""
-//   }
-// ];
-
-// moduleRoutes.forEach(route => router.use(route.path, route.route));
-// export default router;
 import express from 'express';
 import AuthRoute from '../modules/auth/auth.routes';
 
+import profileRoutes from '../modules/auth/profile.route';
 import booksRoutes from '../modules/book/book.routes';
 import categoryRoutes from '../modules/category/category.routes';
 import orderRoutes from '../modules/order/order.routes';
@@ -44,6 +30,10 @@ const moduleRoutes =[
         path:"/orders",
         route:orderRoutes
 
+      },
+      {
+        path:"/profile",
+        route:profileRoutes
       }
 ]
 moduleRoutes.forEach(route => router.use(route.path, route.route));
