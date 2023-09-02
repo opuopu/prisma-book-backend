@@ -34,10 +34,21 @@ const getSingleOrder  =  catchAsync(async(req:Request,res:Response)=>{
       })
 })
 
+const getspecificOrder  =  catchAsync(async(req:Request,res:Response)=>{
+
+    const result  = await orderServices.getspecificOrder(req.params.id,req.user)
+    res.send({
+        success: true,
+        statusCode: 200,
+        message: 'orders retrive  successfully',
+        data: result,
+      })
+})
+
 
 const orderController  = {
     createAorder,
-
+getspecificOrder,
     getSingleOrder
 }
 
