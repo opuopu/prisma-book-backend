@@ -11,7 +11,7 @@ const handleClientError = (error: Prisma.PrismaClientKnownRequestError) => {
     errors = [
       {
         path: "",
-        message
+        message: message? message : "something went wrong"
       }
     ]
   }
