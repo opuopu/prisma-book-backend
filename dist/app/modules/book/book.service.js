@@ -40,16 +40,26 @@ const getallbooks = (filters, options) => __awaiter(void 0, void 0, void 0, func
             }))
         });
     }
-    if (minPrice !== undefined || maxPrice !== undefined) {
-        const maxPrices = parseFloat(maxPrice);
+    if (minPrice !== undefined) {
         const minPrices = parseFloat(minPrice);
-        if (!isNaN(maxPrices) && !isNaN(minPrices)) {
+        if (!isNaN(minPrices)) {
             andConditions.push({
                 price: {
                     gte: minPrices,
+                },
+            });
+            console.log("MinPrice is used");
+        }
+    }
+    if (maxPrice !== undefined) {
+        const maxPrices = parseFloat(maxPrice);
+        if (!isNaN(maxPrices)) {
+            andConditions.push({
+                price: {
                     lte: maxPrices,
                 },
             });
+            console.log("MaxPrice is used");
         }
     }
     if (category !== undefined) {

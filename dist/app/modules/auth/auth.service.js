@@ -20,6 +20,8 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const createAuthUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const password = yield bcrypt_1.default.hash(data === null || data === void 0 ? void 0 : data.password, Number(config_1.default.bycrypt_salt_rounds));
+    data.password = password;
     const result = yield prisma_1.default.user.create({
         data,
         include: {
