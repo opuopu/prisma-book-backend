@@ -2,7 +2,7 @@
 
 ### USER
 * api/v1/auth/signup (POST)
-* api/v1/auth/login (POST =>GET ACCESS TOKEN)
+* api/v1/auth/signin (POST =>GET ACCESS TOKEN)
 * api/v1/profile (GET)
 * api/v1/users (GET)
 * api/v1/users/286f7709-9033-456a-9db1-85219e7cc752 (Single GET) 
