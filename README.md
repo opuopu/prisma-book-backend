@@ -13,7 +13,7 @@
   ### CATEGORY
 * api/v1/categories/create-category (POST)
 * api/v1/categories (GET)
-* api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (Single GET) 
+* api/v1/categories/906f4876-f6a4-4420-bd03-438fc1b5409c (Single GET) 
 * api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (PATCH)
 * api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (DELETE)
 
