@@ -2,20 +2,20 @@
 
 ### USER
 * api/v1/auth/signup (POST)
-* api/v1/auth/signin (POST =>GET ACCESS TOKEN)
-* api/v1/profile (GET)
+* api/v1/auth/signin (POST)
 * api/v1/users (GET)
-* api/v1/users/286f7709-9033-456a-9db1-85219e7cc752 (Single GET) 
-* api/v1/users/877ea29c-7088-43ac-a728-ae464ee11f62 (PATCH)
-* api/v1/users/877ea29c-7088-43ac-a728-ae464ee11f62 (DELETE) 
+* api/v1/users/c00c1b71-2b38-48f2-98fa-2d4520d4bf16 (Single GET) 
+* api/v1/users/c00c1b71-2b38-48f2-98fa-2d4520d4bf16 (PATCH)
+* api/v1/users/c00c1b71-2b38-48f2-98fa-2d4520d4bf16 (DELETE) 
+* api/v1/profile (GET)
 * api/v1/profile (GET)
 
   ### CATEGORY
 * api/v1/categories/create-category (POST)
 * api/v1/categories (GET)
-* api/v1/categories/660625d6-c414-4ea1-834b-545c1162535a (Single GET) 
-* api/v1/categories/f76db44a-163b-4a5c-8c42-e6d1058dd136 (PATCH)
-* api/v1/categories/f76db44a-163b-4a5c-8c42-e6d1058dd136 (DELETE)
+* api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (Single GET) 
+* api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (PATCH)
+* api/v1/categories/29ce73b0-015e-4b32-a55c-306a84cd03de (DELETE)
 
 ### BOOK
 * api/v1/books/create-book (POST)
